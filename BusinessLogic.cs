@@ -5,7 +5,7 @@ class BusinessLogic
   readonly private List<User> users = [];
   readonly private List<Record> records = [];
 
-  public List<User> GetAllUsers() => users;
+  public IReadOnlyCollection<User> GetAllUsers() => users.AsReadOnly();
 
   public BusinessLogic()
   {
@@ -45,7 +45,11 @@ class BusinessLogic
 
   public List<User> GetUsersBySubstring(string substring)
   {
-    return (from u in users where u.Name.Contains(substring) || u.Surname.Contains(substring) select u).ToList();
+    substring = substring.ToLower();
+    return (from u in users
+            where u.Name.Contains(substring, StringComparison.CurrentCultureIgnoreCase)
+               || u.Surname.Contains(substring, StringComparison.CurrentCultureIgnoreCase)
+            select u).ToList();
   }
 
   public List<string> GetAllUniqueNames()
@@ -80,6 +84,11 @@ class BusinessLogic
 
   public List<User> GetUsersPage(int pageSize, int i)
   {
+    --i;
+    if (pageSize * i >= users.Count || i < 0)
+    {
+      throw new ArgumentOutOfRangeException("Index of page was out of range. Must be non-negative and less than the size of the users collection. (Parameter 'index')");
+    }
     return users.Skip(pageSize * i).Take(pageSize).ToList();
   }
 }
