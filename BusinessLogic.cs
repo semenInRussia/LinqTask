@@ -40,11 +40,13 @@ class BusinessLogic
 
   public User GetUserByID(int id)
   {
-    return (from u in users where u.ID == id select u).Single();
+    var user = (from u in users where u.ID == id select u).SingleOrDefault();
+    return user ?? throw new KeyNotFoundException($"The given ID '{id}' was not present in the user's list.");
   }
 
   public List<User> GetUsersBySubstring(string substring)
   {
+    if (substring == null) return [];
     substring = substring.ToLower();
     return (from u in users
             where u.Name.Contains(substring, StringComparison.CurrentCultureIgnoreCase)
