@@ -2,7 +2,7 @@ namespace LinqTask;
 
 class User(int id, string name, string surname)
 {
-  public int ID { get; set; } = id;
+  public int ID { get; } = id;
   public string Name { get; set; } = name;
   public string Surname { get; set; } = surname;
 
