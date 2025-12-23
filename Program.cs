@@ -58,9 +58,9 @@ foreach (var user in bl.GetDescendingOrderedUsers())
 Console.WriteLine("\n");
 
 Console.WriteLine("Users on pages:\n---");
-for (int i = 0; i < 4; i++)
+for (int i = 1; i <= 3; i++)
 {
-  Console.WriteLine($"Page {i + 1}:");
+  Console.WriteLine($"Page {i}:");
   foreach (var user in bl.GetUsersPage(2, i))
   {
     Console.WriteLine($"- {user}");

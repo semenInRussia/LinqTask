@@ -89,7 +89,7 @@ class BusinessLogic
     --i;
     if (pageSize * i >= users.Count || i < 0)
     {
-      throw new ArgumentOutOfRangeException("Index of page was out of range. Must be non-negative and less than the size of the users collection. (Parameter 'index')");
+      throw new ArgumentOutOfRangeException(nameof(i), $"Index of page was out of range. Must be non-negative and less than the size of the users collection: {i}");
     }
     return users.Skip(pageSize * i).Take(pageSize).ToList();
   }
